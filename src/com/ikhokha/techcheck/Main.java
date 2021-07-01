@@ -24,7 +24,7 @@ public class Main {
 		System.out.println("RESULTS\n=======");
 		totalResults.forEach((k,v) -> System.out.println(k + " : " + v));*/
 		Analyzer analyzer = new Analyzer();
-		Report report = analyzer.analyze();
+		CommentReport report = analyzer.analyze();
 		System.out.println("SHORTER_THAN_15: " + report.Shorter);
 		System.out.println("SHAKER_MENTIONS: " + report.Shakers);
 		System.out.println("MOVERS_MENTIONS: " + report.Movers);
