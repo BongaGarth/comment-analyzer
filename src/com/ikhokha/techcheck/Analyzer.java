@@ -24,10 +24,15 @@ public class Analyzer {
                 var cFile = files.pop();
                 BufferedReader reader = new BufferedReader(new FileReader(cFile));
                 List<String> lines = reader.lines().collect(Collectors.toList());
-                long movers = lines.stream().filter(line -> line.toLowerCase().contains("mover")).count();
-                long shakers = lines.stream().filter(line -> line.toLowerCase().contains("shaker")).count();
+                long movers = lines.stream().filter(s -> s.toLowerCase().contains("mover")).count();
+                long shakers = lines.stream().filter(s -> s.toLowerCase().contains("shaker")).count();
+                long shortComments = lines.stream().filter(s -> s.length() < 15).count();
+                long questions = lines.stream().filter(s -> s.contains("?")).count();
+
                 report.Shakers += shakers;
                 report.Movers += movers;
+                report.Shorter += shortComments;
+                report.Questions += questions;
 
                 System.out.println("file name: " + cFile.getName());
             }
@@ -53,4 +58,6 @@ public class Analyzer {
 class Report {
     public int Movers;
     public int Shakers;
+    public int Shorter;
+    public int Questions;
 }
