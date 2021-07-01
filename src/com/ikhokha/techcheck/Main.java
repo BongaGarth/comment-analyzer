@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Map<String, Integer> totalResults = new HashMap<>();
+		/* Map<String, Integer> totalResults = new HashMap<>();
 				
 		File docPath = new File("docs");
 		File[] commentFiles = docPath.listFiles((d, n) -> n.endsWith(".txt"));
@@ -22,7 +22,11 @@ public class Main {
 		}
 		
 		System.out.println("RESULTS\n=======");
-		totalResults.forEach((k,v) -> System.out.println(k + " : " + v));
+		totalResults.forEach((k,v) -> System.out.println(k + " : " + v));*/
+		Analyzer analyzer = new Analyzer();
+		Report report = analyzer.analyze();
+		System.out.println("SHAKERS: " + report.Shakers);
+		System.out.println("MOVERS: " + report.Movers);
 	}
 	
 	/**

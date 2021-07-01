@@ -22,21 +22,20 @@ public class CommentAnalyzer {
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			
-			String line = null;
+			String line;
 			while ((line = reader.readLine()) != null) {
 				
 				if (line.length() < 15) {
 					
 					incOccurrence(resultsMap, "SHORTER_THAN_15");
-
-				} else if (line.contains("Mover")) {
+				}
+				if (line.contains("Mover")) {
 
 					incOccurrence(resultsMap, "MOVER_MENTIONS");
 				
-				} else if (line.contains("Shaker")) {
-
+				}
+				if (line.contains("Shaker")) {
 					incOccurrence(resultsMap, "SHAKER_MENTIONS");
-				
 				}
 			}
 			
