@@ -14,6 +14,7 @@ public class Analyzer {
     public CommentReport analyze() {
         var report = new CommentReport();
         try {
+            // get all files from docs
             var files = getCommentFiles();
             while (files.size() != 0) {
                 // get file from the stack
@@ -27,6 +28,7 @@ public class Analyzer {
                 long shortComments = lines.stream().filter(s -> s.length() < 15).count();
                 long questions = lines.stream().filter(s -> s.contains("?")).count();
 
+                // regex to match all urls per line
                 Pattern rgx = Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)", Pattern.CASE_INSENSITIVE);
                 long spam = lines.stream().filter(s -> rgx.matcher(s).find()).count();
 
