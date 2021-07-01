@@ -5,4 +5,5 @@ public class CommentReport {
     public int Shakers;
     public int Shorter;
     public int Questions;
+    public int Spam;
 }

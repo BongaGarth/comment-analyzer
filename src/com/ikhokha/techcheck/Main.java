@@ -29,6 +29,7 @@ public class Main {
 		System.out.println("SHAKER_MENTIONS: " + report.Shakers);
 		System.out.println("MOVERS_MENTIONS: " + report.Movers);
 		System.out.println("QUESTIONS: " + report.Questions);
+		System.out.println("SPAM: " + report.Spam);
 	}
 	
 	/**
