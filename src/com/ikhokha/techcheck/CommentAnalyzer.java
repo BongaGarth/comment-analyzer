@@ -21,9 +21,9 @@ public class CommentAnalyzer {
 		CommentReport report = new CommentReport();
 		try {
 			// read the file
-			BufferedReader reader = new BufferedReader(new FileReader(_file));
+			var reader = new BufferedReader(new FileReader(_file));
 			// get lines in file, converting stream to strings
-			List<String> lines = reader.lines().collect(Collectors.toList());
+			var lines = reader.lines().collect(Collectors.toList());
 
 			// filter the information you want
 			long movers = lines.stream().filter(s -> s.toLowerCase().contains("mover")).count();
@@ -32,7 +32,7 @@ public class CommentAnalyzer {
 			long questions = lines.stream().filter(s -> s.contains("?")).count();
 
 			// match all urls and assign to spam count
-			Pattern rgx = Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)", Pattern.CASE_INSENSITIVE);
+			var rgx = Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)", Pattern.CASE_INSENSITIVE);
 			long spam = lines.stream().filter(s -> rgx.matcher(s).find()).count();
 
 			// add results to report

@@ -20,8 +20,10 @@ public class Main {
 		try {
 			// get files from docs folder
 			File[] files = new File("docs").listFiles((file, s) -> s.endsWith(".txt"));
-			// create thread pool. nThread = files.length
-			ExecutorService executor = Executors.newFixedThreadPool(files.length);
+			// configurable threads (not sure how many threads is too many threads)
+			int nThread = files.length < 10 ? files.length : files.length / 4;
+			// create thread pool. nThread = files.length or less
+			ExecutorService executor = Executors.newFixedThreadPool(nThread);
 			// create stack of future to store it's file analysis report
 			Stack<Future<CommentReport>> futures = new Stack<>();
 			ArrayList<CommentReport> reports = new ArrayList<>();
