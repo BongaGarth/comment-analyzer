@@ -6,60 +6,46 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CommentAnalyzer {
-	
-	private File file;
-	
+	private File _file;
 	public CommentAnalyzer(File file) {
-		this.file = file;
+		_file = file;
 	}
-	
-	public Map<String, Integer> analyze() {
-		
-		Map<String, Integer> resultsMap = new HashMap<>();
-		
-		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-			
-			String line;
-			while ((line = reader.readLine()) != null) {
-				
-				if (line.length() < 15) {
-					
-					incOccurrence(resultsMap, "SHORTER_THAN_15");
-				}
-				if (line.contains("Mover")) {
+	public Callable<CommentReport> analyze = ()  -> {
+		CommentReport report = new CommentReport();
+		try {
+			// read the file
+			BufferedReader reader = new BufferedReader(new FileReader(_file));
+			// get lines in file, converting stream to strings
+			List<String> lines = reader.lines().collect(Collectors.toList());
 
-					incOccurrence(resultsMap, "MOVER_MENTIONS");
-				
-				}
-				if (line.contains("Shaker")) {
-					incOccurrence(resultsMap, "SHAKER_MENTIONS");
-				}
-			}
-			
+			// filter the information you want
+			long movers = lines.stream().filter(s -> s.toLowerCase().contains("mover")).count();
+			long shakers = lines.stream().filter(s -> s.toLowerCase().contains("shaker")).count();
+			long shortComments = lines.stream().filter(s -> s.length() < 15).count();
+			long questions = lines.stream().filter(s -> s.contains("?")).count();
+
+			// match all urls and assign to spam count
+			Pattern rgx = Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)", Pattern.CASE_INSENSITIVE);
+			long spam = lines.stream().filter(s -> rgx.matcher(s).find()).count();
+
+			// add results to report
+			report.Shakers = shakers;
+			report.Movers = movers;
+			report.Shorter = shortComments;
+			report.Questions = questions;
+			report.Spam = spam;
+			System.out.println("File processed: " + _file.getName());
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + file.getAbsolutePath());
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("IO Error processing file: " + file.getAbsolutePath());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-		
-		return resultsMap;
-		
-	}
-	
-	/**
-	 * This method increments a counter by 1 for a match type on the countMap. Uninitialized keys will be set to 1
-	 * @param countMap the map that keeps track of counts
-	 * @param key the key for the value to increment
-	 */
-	private void incOccurrence(Map<String, Integer> countMap, String key) {
-		
-		countMap.putIfAbsent(key, 0);
-		countMap.put(key, countMap.get(key) + 1);
-	}
+		return report;
+	};
 
 }
