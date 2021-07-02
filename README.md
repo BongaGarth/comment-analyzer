@@ -1,25 +1,6 @@
-# iKhokha Tech Check
+# Comment Checker
 
-### Customer Review Analyzer
----
-### Introduction
 
-At iKhokha, we love receiving feedback from our customers - especially when it's positive :) We would like to analyze our customer online reviews and comments and the new graduate was tasked to write a Java Application that will run through all the comments and create a report with totals to be used for business intelligence and marketing. 
-
-We currently have three metrics that we keep track of:
-
-  - Total number of comments that are shorter than 15 characters
-  - Total number of comments that refer to the "Mover" device
-  - Total number of comments that refer to the "Shaker" device
-
-The daily comments are stored in text files under the **docs** directory within the project. Each line represents a single comment by a customer. All files in the directory get analyzed and the report gets printed to the console.
-
-#### Prerequisites
-  - Git
-  - JDK 1.8 or later
-  - An IDE of your choice (Eclipse, IntelliJ IDEA etc)
-
----
 ### Tasks
 Clone this repo and complete the 3 tasks below. Be sure to read each one carefully and make your changes to the existing code provided in the project. Once complete, you can upload it to your own repo and share the url. Alternatively you can zip it up and send via email. Good luck!
 
